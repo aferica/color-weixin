@@ -1,0 +1,118 @@
+<style lang="less">
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userinfo-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+    color: #aaa;
+  }
+</style>
+<template>
+  <view>
+    <CustomNav bgColor="bg-gradual-blue">
+      <view slot="content">{{currentTitle}}</view>
+    </CustomNav>
+    <scroll-view>
+      <swiper class="screen-swiper square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+        <repeat for="{{swiperList}}" item="item">
+          <swiper-item>
+            <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
+            <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
+          </swiper-item>
+        </repeat>
+      </swiper>
+
+    </scroll-view>
+    <view class="cu-bar tabbar bg-white foot">
+      <repeat for="{{tabbarList}}" item="item">
+        <view wx:if="{{item.isBtn}}" class="action add-action {{currentPage == item.value ? 'text-green': 'text-gray'}}"  @tap="changeTab({{item}})">
+          <button class="cu-btn {{item.icon}} shadow {{currentPage == item.value ? 'bg-green': 'text-gray'}}"></button> {{item.name}}
+        </view>
+        <view wx:else class="action {{currentPage == item.value ? 'text-green': 'text-gray'}}"  @tap="changeTab({{item}})">
+          <view class="{{currentPage == item.value ? item.iconFill: item.icon}}"></view> {{item.name}}
+        </view>
+      </repeat>
+    </view>
+    <toast />
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Toast from 'wepy-com-toast'
+  import CustomNav from '../components/custom-nav'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'test'
+    }
+    components = {
+      toast: Toast,
+      CustomNav
+    }
+
+    data = {
+      userInfo: {
+        nickName: '加载中...'
+      },
+      currentTitle: '首页',
+      currentPage: 'home',
+      tabbarList: [
+        { name: '首页', value: 'home', icon: 'cuIcon-home', iconFill: 'cuIcon-homefill', isBtn: false },
+        { name: '分类', value: 'category', icon: 'cuIcon-circle', iconFill: 'cuIcon-circlefill', isBtn: false },
+        { name: '发布', value: 'publish', icon: 'cuIcon-add', iconFill: '', isBtn: true },
+        { name: '购物车', value: 'cart', icon: 'cuIcon-cart', iconFill: 'cuIcon-cartfill', isBtn: false },
+        { name: '我的', value: 'user', icon: 'cuIcon-my', iconFill: 'cuIcon-myfill', isBtn: false }
+      ],
+      cardCur: 0,
+      swiperList: [{
+        id: 0,
+        type: 'image',
+        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
+      }, {
+        id: 1,
+        type: 'image',
+        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84001.jpg'
+      }, {
+        id: 2,
+        type: 'image',
+        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
+      }, {
+        id: 3,
+        type: 'image',
+        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
+      }, {
+        id: 4,
+        type: 'image',
+        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
+      }, {
+        id: 5,
+        type: 'image',
+        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg'
+      }, {
+        id: 6,
+        type: 'image',
+        url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
+      }]
+    }
+
+    methods = {
+      changeTab (selectTab) {
+        console.log(selectTab)
+        this.currentPage = selectTab.value
+        this.currentTitle = selectTab.name
+      }
+    }
+
+    onLoad() {
+    }
+  }
+</script>

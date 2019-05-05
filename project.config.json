@@ -1,0 +1,13 @@
+{
+  "description": "A WePY project",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram",
+  "appid": "wx221787b1ffaddcbd",
+  "projectname": "colorui",
+  "miniprogramRoot": "./dist"
+}
